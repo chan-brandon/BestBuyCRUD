@@ -103,21 +103,35 @@ namespace BestBuyCRUD
             }
         }
 
-        static void UpdateDepartment(string departmentName)
+        static void UpdateDepartment(string currentDepartmentName, string newDepartmentName)
         {
             MySqlConnection conn = new MySqlConnection();
             conn.ConnectionString = System.IO.File.ReadAllText("connectionString.txt");
 
             MySqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = "UPDATE departments SET Name = @departmentName;";
-            cmd.Parameters.AddWithValue("departmentName", departmentName);
+            cmd.CommandText = "UPDATE departments SET name = @newName WHERE name = @currentName;";
+            cmd.Parameters.AddWithValue("newName", newDepartmentName);
+            cmd.Parameters.AddWithValue("currentName", currentDepartmentName);
 
             using (conn)
             {
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        // Testing using int instead of strings
+        static void DeleteDepartment2(string departmentName, int departmentID)
+        {
+            MySqlConnection conn = new MySqlConnection();
+            conn.ConnectionString = System.IO.File.ReadAllText("connectionString.txt");
+
+            MySqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = "DELETE FROM departments WHERE name = @departmentName, id = @departmentID";
+            cmd.Parameters.AddWithValue("departmentName", departmentName);
+            cmd.Parameters.AddWithValue("departmentID", departmentID);
         }
     }
 }
