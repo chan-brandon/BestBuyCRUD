@@ -8,4 +8,7 @@
   <ItemGroup>
     <None Include="bin\Debug\netcoreapp3.0\connectionString.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.17" />
+  </ItemGroup>
 </Project>
