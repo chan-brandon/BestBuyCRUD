@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using System.Text;
+using System.IO;
 
 namespace BestBuyCRUD
 {
@@ -14,6 +16,15 @@ namespace BestBuyCRUD
             foreach (var department in departments)
             {
                 Console.WriteLine(department);
+            }
+
+            try
+            {
+                Console.WriteLine(departments[8]);
+            }
+            catch (Exception e)
+            {
+                LoggerError(e);
             }
 
             Console.WriteLine("Here are your current departments that you manage. You have to add a new department for the new sports section.");
@@ -46,7 +57,17 @@ namespace BestBuyCRUD
         static List<string> GetAllDepartments()
         {
             MySqlConnection conn = new MySqlConnection();
-            conn.ConnectionString = System.IO.File.ReadAllText("connectionString.txt");
+
+            try
+            {
+                LoggerMessage("Accessing Connection File");
+                conn.ConnectionString = System.IO.File.ReadAllText("connectionString.txt");
+            }
+            catch (Exception e)
+            {
+                LoggerError(e);
+            }
+            
 
             MySqlCommand cmd = conn.CreateCommand();
 
@@ -133,5 +154,29 @@ namespace BestBuyCRUD
             cmd.Parameters.AddWithValue("departmentName", departmentName);
             cmd.Parameters.AddWithValue("departmentID", departmentID);
         }
+
+        // Logging Information -- Logs found in log.txt
+        static void LoggerMessage(string message)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
+            sb.Append($"{message} {DateTime.Now}");
+            sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
+            var filePath = "";
+            File.AppendAllText(filePath + "log.txt", sb.ToString());
+        }
+
+        static void LoggerError(Exception error)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
+            sb.Append($"{error.Message} {DateTime.Now}");
+            sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
+            var filePath = "";
+
+            File.AppendAllText(filePath + "log.txt", sb.ToString());
+        }
+
     }
 }
