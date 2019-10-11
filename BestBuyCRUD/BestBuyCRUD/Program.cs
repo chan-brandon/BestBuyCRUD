@@ -16,6 +16,9 @@ namespace BestBuyCRUD
             foreach (var department in departments)
             {
                 Console.WriteLine(department);
+
+                LoggerMessage($"Returning {department}");
+
             }
 
             try
@@ -47,10 +50,10 @@ namespace BestBuyCRUD
                 }
                 else
                 {
-                    Console.WriteLine("Okay then. You can leave.");
+                    Console.WriteLine("Okay then.");
                 }
             }
-            Console.WriteLine("Nice! Now go away!");
+            Console.WriteLine("Now go away!");
 
         }
 
@@ -160,20 +163,19 @@ namespace BestBuyCRUD
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
-            sb.Append($"{message} {DateTime.Now}");
+            sb.Append($"{message} {DateTime.Now} -- accessed by user named '{Environment.UserName}'");
             sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
-            var filePath = "";
+            var filePath = "logs/";
             File.AppendAllText(filePath + "log.txt", sb.ToString());
         }
 
         static void LoggerError(Exception error)
         {
             StringBuilder sb = new StringBuilder();
-
-            sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
-            sb.Append($"{error.Message} {DateTime.Now}");
-            sb.Append($"{Environment.NewLine} ------------------------------- {Environment.NewLine}");
-            var filePath = "";
+            sb.Append($"{Environment.NewLine} --------------ERROR ERROR--------------ERROR ERROR-------------- {Environment.NewLine}");
+            sb.Append($"{error.Message} {DateTime.Now} -- accessed by user named '{Environment.UserName}'");
+            sb.Append($"{Environment.NewLine} --------------ERROR ERROR--------------ERROR ERROR-------------- {Environment.NewLine}");
+            var filePath = "logs/";
 
             File.AppendAllText(filePath + "log.txt", sb.ToString());
         }

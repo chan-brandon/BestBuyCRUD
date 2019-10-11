@@ -7,9 +7,12 @@
 
   <ItemGroup>
     <None Include="bin\Debug\netcoreapp3.0\connectionString.txt" />
-    <None Include="bin\Debug\netcoreapp3.0\log.txt" />
+    <None Include="bin\Debug\netcoreapp3.0\logs\log.txt" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.17" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\netcoreapp3.0\logs\" />
   </ItemGroup>
 </Project>
